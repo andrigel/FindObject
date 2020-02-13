@@ -13,6 +13,8 @@ TagManager:
   - Lvl2Object
   - Lvl3Unique
   - Lvl3Thesome
+  - MenuButton
+  - Options
   layers:
   - Default
   - TransparentFX

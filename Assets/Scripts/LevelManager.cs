@@ -9,14 +9,12 @@ public class LevelManager : MonoBehaviour
     private Level2Creator lc2;
     private Level3Creator lc3;
     public GameObject MainMenu;
-    public GameObject[] elementsToPause;
     void Start()
     {
         stage = 0;
         lc1 = GetComponent<Level1Creator>();
         lc2 = GetComponent<Level2Creator>();
         lc3 = GetComponent<Level3Creator>();
-        MainMenu.SetActive(true);
     }
 
     public void CreateNextLevel(int selectStage = 0)
@@ -37,11 +35,6 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            MainMenu.SetActive(true);
-            foreach(var el in elementsToPause)
-            {
-                el.SetActive(false);
-            }
             Time.timeScale = 0;
             this.gameObject.SetActive(false);
         }
