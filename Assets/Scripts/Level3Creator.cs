@@ -21,9 +21,13 @@ public class Level3Creator : MonoBehaviour
     private LevelManager lm;
     private Coroutine TimerCoroutine = null;
     private int part = 1;
+    private AudioSource SpecialAudio;
+    private AudioSource BackgroundAudio;
     private void Start()
     {
         lm = GetComponent<LevelManager>();
+        BackgroundAudio = GameObject.FindGameObjectWithTag("BackgroundAudioObj").GetComponent<AudioSource>();
+        SpecialAudio = GameObject.FindGameObjectWithTag("SpecialAudioObj").GetComponent<AudioSource>();
     }
     public void CreatePart(int x_count, int y_count, int time)
     {
@@ -91,6 +95,8 @@ public class Level3Creator : MonoBehaviour
     public IEnumerator GoNext(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        SpecialAudio.Stop();
+        BackgroundAudio.Play();
         part++;
         GoNextPart();
         yield return null;
@@ -131,12 +137,18 @@ public class Level3Creator : MonoBehaviour
             if (sender.GetComponent<Image>().sprite == UniqueObjects[part - 1])
             {
                 HeaderObj.GetComponent<Text>().text = "Правильно!";
+                BackgroundAudio.Pause();
+                SpecialAudio.clip = lm.GoodAnswer;
+                SpecialAudio.Play();
                 isPlaying = false;
                 StartCoroutine(GoNext(4f));
             }
             else
             {
                 HeaderObj.GetComponent<Text>().text = "Відповідь не вірна!";
+                BackgroundAudio.Pause();
+                SpecialAudio.clip = lm.BadAnswer;
+                SpecialAudio.Play();
                 isPlaying = false;
                 foreach (var obj in Objects)
                 {

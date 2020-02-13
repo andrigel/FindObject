@@ -13,10 +13,12 @@ public class Menu : MonoBehaviour
     public GameObject OptionsBackButton;
     public GameObject Scrollbar;
     public GameObject Value;
+    public AudioClip MenuAudio;
     private LevelManager lm;
     private List<UnityAction> buttonFunctions;
     private List<string> buttonText;
     private Scrollbar scrollbar;
+    
 
     void Start()
     {

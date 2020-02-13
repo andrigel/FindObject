@@ -9,12 +9,21 @@ public class LevelManager : MonoBehaviour
     private Level2Creator lc2;
     private Level3Creator lc3;
     public GameObject MainMenu;
+    public GameObject FonAudioObject;
+    public AudioClip[] BackgroundAudioClips;
+    public AudioClip GoodAnswer;
+    public AudioClip BadAnswer;
+    private AudioSource FonAudio;
+
     void Start()
     {
         stage = 0;
         lc1 = GetComponent<Level1Creator>();
         lc2 = GetComponent<Level2Creator>();
         lc3 = GetComponent<Level3Creator>();
+        FonAudio = FonAudioObject.GetComponent<AudioSource>();
+        FonAudio.clip = BackgroundAudioClips[stage];
+        FonAudio.Play();
     }
 
     public void CreateNextLevel(int selectStage = 0)
@@ -24,10 +33,10 @@ public class LevelManager : MonoBehaviour
         else stage = selectStage;
         switch (stage)
         {
-            case 1: lc1.CreatePart(10, 6, 15); break;
-            case 2: lc2.CreatePart(); break;
-            case 3: lc3.CreatePart(20, 9, 20); break;
-            default: stage = 1; lc1.CreatePart(10, 6, 15); break;
+            case 1: { lc1.CreatePart(10, 6, 15); FonAudio.clip = BackgroundAudioClips[stage]; FonAudio.Play(); break; }
+            case 2: lc2.CreatePart(); FonAudio.clip = BackgroundAudioClips[stage]; FonAudio.Play(); break;
+            case 3: lc3.CreatePart(20, 9, 20); FonAudio.clip = BackgroundAudioClips[stage]; FonAudio.Play(); break;
+            default: stage = 1; lc1.CreatePart(10, 6, 15); FonAudio.clip = BackgroundAudioClips[stage]; FonAudio.Play(); break;
         }
     }
 
